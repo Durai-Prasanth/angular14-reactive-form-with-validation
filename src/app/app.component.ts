@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { passwordMatch } from './Password_Match/password.match.validator';
+
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
@@ -17,16 +19,21 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      mobileNumber: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-    });
+    this.registerForm = this.fb.group(
+      {
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        city: ['', Validators.required],
+        state: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        mobileNumber: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+      },
+      {
+        validator: passwordMatch('password', 'confirmPassword'),
+      }
+    );
   }
 
   onSubmit() {

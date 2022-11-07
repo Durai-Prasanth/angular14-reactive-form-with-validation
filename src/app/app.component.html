@@ -134,22 +134,27 @@
               class="form-control"
               type="password"
               placeholder="Enter Confirm Password"
-              formControlName="confirmPassword" [ngClass]="{'is-invalid':submitted && f.confirmPassword.errors}"
+              formControlName="confirmPassword"
+              [ngClass]="{
+                'is-invalid': submitted && f.confirmPassword.errors
+              }"
             />
             <div
               *ngIf="submitted && f.confirmPassword.errors"
               class="invalid-feedback"
             >
-              <div *ngIf="f.confirmPassword.errors.required">Confirm Password is Required</div>
-              <div *ngIf="f.confirmPassword.errors.minlength">
-                Confirm Password must be at least 6 characters
+              <div *ngIf="f.confirmPassword.errors.required">
+                Confirm Password is Required
+              </div>
+              <div *ngIf="f.confirmPassword.errors.mustMatch">
+                Passwords must match
               </div>
             </div>
           </div>
         </div>
         <div class="text-center">
           <button class="btn btn-primary mr-1">Register</button>
-          <button class="btn btn-secondary" type="reset" click="onReset()">
+          <button class="btn btn-secondary" type="reset" (click)="onReset()">
             Cancel
           </button>
         </div>
