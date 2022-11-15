@@ -1,0 +1,16 @@
+{
+  "firstName": "Durai",
+  "lastName": "Prasanth",
+  "city": "Chennai",
+  "state": "Tamilnadu",
+
+"address": [
+{
+  "lineOne": "address1",
+  "lineTwo": "address1"
+}
+],
+"email": "kd@k.com",
+"mobileNumber":"9500768172",
+"password": "123456"
+}

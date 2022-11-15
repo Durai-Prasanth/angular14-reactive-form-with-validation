@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { passwordMatch } from './Password_Match/password.match.validator';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'my-app',
@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   title = 'Angular Reactive Form Validation';
   registerForm: FormGroup;
   submitted = false;
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private dataService: DataService) {}
 
   get f() {
     return this.registerForm.controls;
@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
         lastName: ['', Validators.required],
         city: ['', Validators.required],
         state: ['', Validators.required],
+        address: this.fb.array([]),
         email: ['', [Validators.required, Validators.email]],
         mobileNumber: ['', Validators.required],
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -34,6 +35,22 @@ export class AppComponent implements OnInit {
         validator: passwordMatch('password', 'confirmPassword'),
       }
     );
+
+    this.getJsonData();
+  }
+
+  address() {
+    return this.registerForm.get('address') as FormArray;
+  }
+
+  newAddress(): FormGroup {
+    return this.fb.group({
+      address: ['', Validators.required],
+    });
+  }
+
+  addAddress() {
+    this.address().push(this.newAddress());
   }
 
   onSubmit() {
@@ -42,10 +59,18 @@ export class AppComponent implements OnInit {
       alert('Form Invalid');
     } else {
       console.log(JSON.stringify(this.registerForm.value));
+      this.registerForm.reset();
+      this.registerForm.removeValidators;
     }
   }
   onReset() {
     this.submitted = false;
     this.registerForm.reset();
+  }
+
+  getJsonData() {
+    this.dataService.getData().subscribe((data) => {
+      console.log('getdata ', data);
+    });
   }
 }

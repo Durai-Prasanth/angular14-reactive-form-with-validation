@@ -78,6 +78,18 @@
           <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
             <div *ngIf="f.city.errors.required">City is Required</div>
           </div>
+          <div formArrayName="address" class="from-group col-12 mb-3">
+            <label>Address</label>
+            <div *ngFor = 'let address of address().controls; let addressNew = index'>
+              <div [formGroupName] = "addressNew">
+            <textarea name="" id="" cols="12" rows="2" class="form-control" placeholder="Enter Address" formControlName = "address" [ngClass]="{'is-invalid': submitted && f.address.errors}"></textarea>
+              </div>
+              <div *ngIf = "submitted && f.address.errors" class="invalid-feedback">
+                <div *ngIf = "f.address.errors.required">Address is Requires</div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)=addAddress()>Add Address</button>
+          </div>
           <div class="form-group col-6">
             <label>Email</label>
             <input
